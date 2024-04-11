@@ -1,3 +1,4 @@
+import { emptyArray } from "@/constants/guess";
 import { FormattedGuess, Solution } from "@/types/wordleTypes";
 import { create } from "zustand";
 
@@ -23,7 +24,7 @@ export const useStore = create<Store>()((set) => ({
   },
   turn: 1,
   guess: "",
-  guesses: [...Array(5)],
+  guesses: emptyArray,
   history: [],
   isCorrect: false,
   setSolution: (solution) => set(() => ({ solution })),

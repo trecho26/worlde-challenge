@@ -3,7 +3,13 @@ export type Solution = {
   word: string;
 };
 
+export type ColorStates = "grey" | "green" | "yellow";
+
 export type FormattedGuess = {
   key: string;
-  color: "grey" | "green" | "yellow";
+  color: ColorStates;
+};
+
+export type UsedKeys = {
+  [key: string]: ColorStates;
 };
