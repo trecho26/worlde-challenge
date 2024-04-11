@@ -21,9 +21,9 @@ export const useStore = create<Store>()((set) => ({
     id: "",
     word: "",
   },
-  turn: 0,
+  turn: 1,
   guess: "",
-  guesses: [...Array(6)],
+  guesses: [...Array(5)],
   history: [],
   isCorrect: false,
   setSolution: (solution) => set(() => ({ solution })),
@@ -35,7 +35,7 @@ export const useStore = create<Store>()((set) => ({
   setGuesses: (guesses) =>
     set((state) => {
       let newGuess = [...state.guesses];
-      newGuess[state.turn] = guesses;
+      newGuess[state.turn - 1] = guesses;
       return { guesses: newGuess };
     }),
   setHistory: (guess) =>
