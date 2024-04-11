@@ -2,12 +2,16 @@ import { useStore } from "@/store";
 import Row from "./Row";
 
 const Grid = () => {
-  const { guesses } = useStore();
+  const { guess, guesses, turn } = useStore();
   return (
     <div>
-      {guesses.map((guess, index) => (
-        <Row key={index} guess={guess} />
-      ))}
+      {guesses.map((pGuess, index) => {
+        if (index === turn - 1) {
+          return <Row key={index} guess={pGuess} currentGuess={guess} />;
+        }
+
+        return <Row key={index} guess={pGuess} />;
+      })}
     </div>
   );
 };

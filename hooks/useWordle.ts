@@ -49,7 +49,6 @@ const useWordle = () => {
   const addGuess = (formattedGuess: FormattedGuess[]) => {
     if (guess === solution.word) {
       setIsCorrect(true);
-      return;
     }
 
     setGuesses(formattedGuess);
