@@ -18,9 +18,9 @@ const Row = ({ guess }: Props) => {
               className={clsx(
                 "h-16 w-16 border border-gray-200 m-1 text-center leading-[4rem] uppercase font-bold text-3xl rounded select-none text-white",
                 {
-                  "bg-wordGreen": letter.color === "green",
-                  "bg-wordYellow": letter.color === "yellow",
-                  "bg-wordGrey": letter.color === "grey",
+                  "bg-wordGreen border-wordGreen": letter.color === "green",
+                  "bg-wordYellow border-wordYellow": letter.color === "yellow",
+                  "bg-wordGrey border-wordGrey": letter.color === "grey",
                 }
               )}
             >
