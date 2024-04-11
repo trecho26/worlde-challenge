@@ -3,11 +3,12 @@ import { useStore } from "@/store";
 import { UsedKeys } from "@/types/wordleTypes";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-
-// let lastGuessEntered = {};
+import { DeleteIcon } from "./DeleteIcon";
+import useWordle from "@/hooks/useWordle";
 
 const Keyboard = () => {
-  const { guesses } = useStore();
+  const { handleKeyUp } = useWordle();
+  const { guesses, isCorrect, turn } = useStore();
   const [usedKeys, setUsedKeys] = useState<UsedKeys>({});
 
   useEffect(() => {
@@ -45,9 +46,11 @@ const Keyboard = () => {
   return (
     <div className="max-w-[500px] my-[20px] mx-auto text-center">
       {letters.map((letter, index) => (
-        <div
+        <button
+          disabled={isCorrect || turn > 5}
+          onClick={() => handleKeyUp(letter)}
           className={clsx(
-            "m-1 w-10 h-12 bg-gray-200 inline-block rounded leading-[3rem] uppercase ",
+            "m-1 w-10 h-12 bg-gray-200 inline-block rounded leading-[3rem] uppercase disabled:opacity-50",
             {
               "bg-wordGreen text-white transition-all duration-[0.5s] ease-in-out":
                 usedKeys[letter] === "green",
@@ -55,12 +58,14 @@ const Keyboard = () => {
                 usedKeys[letter] === "yellow",
               "bg-wordGrey text-white transition-all duration-[0.5s] ease-in-out":
                 usedKeys[letter] === "grey",
+              "w-[fit-content] px-4 inline-flex justify-center items-center align-bottom":
+                letter === "Enter" || letter === "Backspace",
             }
           )}
           key={`${letter}-${index}`}
         >
-          {letter}
-        </div>
+          {letter === "Backspace" ? <DeleteIcon /> : letter}
+        </button>
       ))}
     </div>
   );

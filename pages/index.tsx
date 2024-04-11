@@ -17,8 +17,8 @@ export default function Home() {
     const randomSolution: Solution =
       words[Math.floor(Math.random() * words.length - 1)];
 
-    setSolution({ id: "1", word: "pours" });
-  }, []);
+    setSolution(randomSolution);
+  }, [setSolution]);
 
   return (
     <main className={`${inter.className} w-[90%] mx-auto my-0`}>

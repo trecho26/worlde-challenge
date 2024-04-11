@@ -8,9 +8,7 @@ const useWordle = () => {
     solution,
     turn,
     guess,
-    guesses,
     history,
-    isCorrect,
     increaseTurn,
     setGuess,
     setGuesses,
@@ -60,16 +58,13 @@ const useWordle = () => {
     setGuess("");
   };
 
-  const handleKeyUp = (e: KeyboardEvent) => {
-    const key = e.key;
+  const handleKeyUp = (key: string) => {
+    if (turn > 5) {
+      console.log("You used all your tuns");
+      return;
+    }
 
     if (key === "Enter") {
-      //Only add guess if turn is less than 5
-      if (turn > 5) {
-        console.log("You used all your tuns");
-        return;
-      }
-
       //Only add new guess (not duplicate guesses)
       if (history.includes(guess)) {
         console.log("You already tried that word");
@@ -96,7 +91,7 @@ const useWordle = () => {
     }
   };
 
-  return { turn, guess, guesses, isCorrect, handleKeyUp };
+  return { handleKeyUp };
 };
 
 export default useWordle;

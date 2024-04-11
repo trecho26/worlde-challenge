@@ -1,6 +1,5 @@
 import useWordle from "@/hooks/useWordle";
 import { useStore } from "@/store";
-import { Solution } from "@/types/wordleTypes";
 import { useEffect } from "react";
 import Grid from "./Grid";
 
@@ -8,21 +7,31 @@ const Wordle = () => {
   const { solution, guess, guesses, isCorrect, turn } = useStore();
   const { handleKeyUp } = useWordle();
 
+  const handleEventListener = (e: KeyboardEvent) => {
+    handleKeyUp(e.key);
+  };
+
   useEffect(() => {
     if (!window) return;
 
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keyup", handleEventListener);
+
+    if (isCorrect) {
+      console.log("Congrats!");
+      window.removeEventListener("keyup", handleEventListener);
+      return;
+    }
+
+    if (turn > 5) {
+      console.log("Out of turns");
+      window.removeEventListener("keyup", handleEventListener);
+      return;
+    }
 
     return () => {
-      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("keyup", handleEventListener);
     };
   }, [handleKeyUp]);
-
-  useEffect(() => {
-    console.log(guesses);
-    console.log(turn);
-    console.log(isCorrect);
-  }, [guesses, turn, isCorrect]);
 
   return (
     <>
