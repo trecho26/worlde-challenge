@@ -1,16 +1,25 @@
+import { useStore } from "@/store";
 import { FormattedGuess } from "@/types/wordleTypes";
 import { isLetter } from "@/utils/regex";
 import { useState } from "react";
 
-const useWordle = (solution: string) => {
-  const [turn, setTurn] = useState(0);
-  const [guess, setGuess] = useState("");
-  const [guesses, setGuesses] = useState<FormattedGuess[][]>([...Array(6)]);
-  const [history, setHistory] = useState<string[]>([]);
-  const [isCorrect, setIsCorrect] = useState(false);
+const useWordle = () => {
+  const {
+    solution,
+    turn,
+    guess,
+    guesses,
+    history,
+    isCorrect,
+    increaseTurn,
+    setGuess,
+    setGuesses,
+    setHistory,
+    setIsCorrect,
+  } = useStore();
 
   const formatGuess = () => {
-    const solutionArr: (string | null)[] = solution.split("");
+    const solutionArr: (string | null)[] = solution.word.split("");
     const formattedGuess: FormattedGuess[] = guess.split("").map((letter) => {
       return {
         key: letter,
@@ -38,20 +47,16 @@ const useWordle = (solution: string) => {
   };
 
   const addGuess = (formattedGuess: FormattedGuess[]) => {
-    if (guess === solution) {
+    if (guess === solution.word) {
       setIsCorrect(true);
       return;
     }
 
-    setGuesses((prevGuesses) => {
-      let newGuess = [...prevGuesses];
-      newGuess[turn] = formattedGuess;
-      return newGuess;
-    });
+    setGuesses(formattedGuess);
 
-    setHistory((prevHistory) => [...prevHistory, guess]);
+    setHistory(guess);
 
-    setTurn((prevTurn) => prevTurn + 1);
+    increaseTurn();
 
     setGuess("");
   };
@@ -83,12 +88,12 @@ const useWordle = (solution: string) => {
     }
 
     if (key === "Backspace") {
-      setGuess((currGuess) => currGuess.slice(0, -1));
+      setGuess(guess.slice(0, -1));
       return;
     }
 
     if (isLetter(key) && guess.length < 5) {
-      setGuess((currGuess) => currGuess + key);
+      setGuess(guess + key);
     }
   };
 

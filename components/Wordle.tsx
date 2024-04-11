@@ -1,15 +1,11 @@
 import useWordle from "@/hooks/useWordle";
+import { useStore } from "@/store";
 import { Solution } from "@/types/wordleTypes";
 import { useEffect } from "react";
 
-type Props = {
-  solution: Solution;
-};
-
-const Wordle = ({ solution }: Props) => {
-  const { guess, handleKeyUp, guesses, isCorrect, turn } = useWordle(
-    solution.word
-  );
+const Wordle = () => {
+  const { solution, guess, guesses, isCorrect, turn } = useStore();
+  const { handleKeyUp } = useWordle();
 
   useEffect(() => {
     if (!window) return;
