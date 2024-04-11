@@ -19,7 +19,12 @@ const Wordle = ({ solution }: Props) => {
     };
   }, [handleKeyUp]);
 
-  return <div>current guess - {guess}</div>;
+  return (
+    <>
+      <div>Solution - {solution.word}</div>
+      <div>current guess - {guess}</div>
+    </>
+  );
 };
 
 export default Wordle;
