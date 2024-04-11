@@ -3,7 +3,7 @@ export type Solution = {
   word: string;
 };
 
-export type GuessFormatted = {
+export type FormattedGuess = {
   key: string;
   color: "grey" | "green" | "yellow";
 };

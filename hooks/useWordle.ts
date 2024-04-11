@@ -1,17 +1,17 @@
-import { GuessFormatted } from "@/types/wordleTypes";
+import { FormattedGuess } from "@/types/wordleTypes";
 import { isLetter } from "@/utils/regex";
 import { useState } from "react";
 
 const useWordle = (solution: string) => {
   const [turn, setTurn] = useState(0);
   const [guess, setGuess] = useState("");
-  const [guesses, setGuesses] = useState([]);
-  const [history, setHistory] = useState<string[]>(["ninja"]);
+  const [guesses, setGuesses] = useState<FormattedGuess[][]>([...Array(6)]);
+  const [history, setHistory] = useState<string[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const formatGuess = () => {
     const solutionArr: (string | null)[] = solution.split("");
-    const guessFormatted: GuessFormatted[] = guess.split("").map((letter) => {
+    const formattedGuess: FormattedGuess[] = guess.split("").map((letter) => {
       return {
         key: letter,
         color: "grey",
@@ -19,25 +19,42 @@ const useWordle = (solution: string) => {
     });
 
     //Find any accurate letters
-    guessFormatted.forEach((letter, index) => {
+    formattedGuess.forEach((letter, index) => {
       if (solutionArr[index] === letter.key) {
-        guessFormatted[index].color = "green";
+        formattedGuess[index].color = "green";
         solutionArr[index] = null;
       }
     });
 
     //Find letters that are on the solution but not in the correct order
-    guessFormatted.forEach((letter, index) => {
+    formattedGuess.forEach((letter, index) => {
       if (solutionArr.includes(letter.key) && letter.color !== "green") {
-        guessFormatted[index].color = "yellow";
+        formattedGuess[index].color = "yellow";
         solutionArr[solutionArr.indexOf(letter.key)] = null;
       }
     });
 
-    return guessFormatted;
+    return formattedGuess;
   };
 
-  const addGuess = () => {};
+  const addGuess = (formattedGuess: FormattedGuess[]) => {
+    if (guess === solution) {
+      setIsCorrect(true);
+      return;
+    }
+
+    setGuesses((prevGuesses) => {
+      let newGuess = [...prevGuesses];
+      newGuess[turn] = formattedGuess;
+      return newGuess;
+    });
+
+    setHistory((prevHistory) => [...prevHistory, guess]);
+
+    setTurn((prevTurn) => prevTurn + 1);
+
+    setGuess("");
+  };
 
   const handleKeyUp = (e: KeyboardEvent) => {
     const key = e.key;
@@ -61,7 +78,8 @@ const useWordle = (solution: string) => {
         return;
       }
 
-      const formatted = formatGuess();
+      const formattedGuess = formatGuess();
+      addGuess(formattedGuess);
     }
 
     if (key === "Backspace") {

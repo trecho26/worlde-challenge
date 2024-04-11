@@ -7,7 +7,9 @@ type Props = {
 };
 
 const Wordle = ({ solution }: Props) => {
-  const { guess, handleKeyUp } = useWordle(solution.word);
+  const { guess, handleKeyUp, guesses, isCorrect, turn } = useWordle(
+    solution.word
+  );
 
   useEffect(() => {
     if (!window) return;
@@ -18,6 +20,12 @@ const Wordle = ({ solution }: Props) => {
       window.removeEventListener("keyup", handleKeyUp);
     };
   }, [handleKeyUp]);
+
+  useEffect(() => {
+    console.log(guesses);
+    console.log(turn);
+    console.log(isCorrect);
+  }, [guesses, turn, isCorrect]);
 
   return (
     <>
