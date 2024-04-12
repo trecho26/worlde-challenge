@@ -11,10 +11,7 @@ const Row = ({ guess, currentGuess }: Props) => {
     return (
       <div className="row">
         {guess.map((letter, index) => (
-          <div
-            key={`${letter}-${index}`}
-            className={`${letter.color} text-white`}
-          >
+          <div key={`${letter}-${index}`} className={`${letter.color} `}>
             {letter.key}
           </div>
         ))}

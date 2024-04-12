@@ -68,11 +68,13 @@ html.dark .row > div {
     transform: rotateX(90deg);
     background: var(--background);
     border-color: var(--border-color);
+    color: white;
   }
   100% {
     transform: rotateX(0deg);
     background: var(--background);
     border-color: var(--border-color);
+    color: white;
   }
 }
 
