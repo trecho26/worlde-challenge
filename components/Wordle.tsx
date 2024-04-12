@@ -11,6 +11,7 @@ import { useMetaDataStore } from "@/store/metaData";
 import { DateTime } from "luxon";
 import { getRandomSolution } from "@/utils/solution";
 import Alert from "./Alert";
+import { generateFireworks } from "@/utils/confetti";
 
 const Wordle = () => {
   const {
@@ -78,6 +79,7 @@ const Wordle = () => {
 
     if (isCorrect) {
       console.log("Congrats!");
+      generateFireworks();
       finishSession();
       window.removeEventListener("keyup", handleEventListener);
       return;
