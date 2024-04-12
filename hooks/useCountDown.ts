@@ -8,6 +8,8 @@ const useCountDown = (targetDate: string) => {
   );
 
   useEffect(() => {
+    if (countDown <= 0) return;
+
     const interval = setInterval(() => {
       const diff = countDownDate - new Date().getTime();
 
@@ -22,7 +24,7 @@ const useCountDown = (targetDate: string) => {
     return () => clearInterval(interval);
   }, [countDownDate]);
 
-  return getReturnValues(countDown);
+  return getReturnValues(Math.max(countDown, 0));
 };
 
 const getReturnValues = (countDown: number) => {
