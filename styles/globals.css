@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html.dark {
+  background-color: #262b3c;
+}
+
 .row {
   @apply flex text-center justify-center;
 }
