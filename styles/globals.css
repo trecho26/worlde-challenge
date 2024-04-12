@@ -11,7 +11,13 @@ html.dark {
 }
 
 .row > div {
-  @apply h-16 w-16 border border-gray-200 m-1 text-center leading-[4rem] uppercase font-bold text-3xl rounded select-none;
+  @apply h-16 w-16 bg-[#939B9F4D] border m-1 text-center leading-[4rem] uppercase font-bold text-3xl rounded select-none;
+}
+
+html.dark .row > div {
+  background-color: #939b9f33;
+  border-color: #939b9f33;
+  color: #fff;
 }
 
 .row > div.green {

@@ -7,7 +7,7 @@ import StatsIcon from "./icons/StatsIcon";
 const Navbar = () => {
   const { setInstructionsOpen, setStatsOpen } = useStore();
   return (
-    <div className="flex items-center bg-gray-100 dark:bg-[#DADCE008] p-4 rounded-xl max-w-[500px] my-[20px] mx-auto">
+    <div className="flex items-center bg-[#F3F3F3] dark:bg-[#DADCE008] p-4 rounded-xl max-w-[500px] my-[20px] mx-auto">
       <div className="flex items-center gap-2 min-w-[90px] min-h-[32px]">
         <HelpIcon
           className="w-6 h-6 text-[#818181] dark:text-white"

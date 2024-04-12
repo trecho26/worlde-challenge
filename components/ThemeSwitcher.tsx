@@ -21,7 +21,7 @@ const ThemeSwitcher = () => {
         checked={theme === "dark"}
       />
 
-      <span className="absolute inset-y-0 start-0 z-10 m-1 inline-flex size-6 items-center justify-center rounded-full bg-white text-yellow-400 transition-all peer-checked:start-6 peer-checked:text-indigo-800">
+      <span className="absolute inset-y-0 start-0 z-5 m-1 inline-flex size-6 items-center justify-center rounded-full bg-white text-yellow-400 transition-all peer-checked:start-6 peer-checked:text-indigo-800">
         <svg
           data-unchecked-icon
           xmlns="http://www.w3.org/2000/svg"

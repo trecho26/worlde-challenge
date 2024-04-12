@@ -47,13 +47,13 @@ const Keyboard = () => {
   }, [guesses]);
 
   return (
-    <div className="max-w-[500px] my-[20px] mx-auto text-center select-none">
+    <div className="bg-[#DADCE04D] dark:bg-[#DADCE008] max-w-[532px] my-[20px] mx-auto text-center select-none rounded p-4">
       {letters.map((letter, index) => (
         <button
           disabled={isCorrect || turn > 5}
           onClick={() => handleKeyUp(letter)}
           className={clsx(
-            "m-1 w-10 h-12 bg-gray-200 inline-block rounded leading-[3rem] uppercase disabled:opacity-50",
+            "m-1 w-10 h-12 bg-[#D3D6DA] dark:bg-[#565F7E] dark:text-white inline-block rounded leading-[3rem] uppercase disabled:opacity-50",
             {
               "bg-wordGreen text-white transition-all duration-[0.5s] ease-in-out":
                 usedKeys[letter] === "green",
