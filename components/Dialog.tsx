@@ -33,7 +33,7 @@ const Dialog = ({ children, open, onClose }: Props) => {
         >
           <div className="fixed inset-0 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
-              <DialogComponent.Panel className="mx-auto max-w-sm rounded bg-white px-8 py-4">
+              <DialogComponent.Panel className="mx-auto max-w-sm rounded bg-white dark:bg-[#262B3C] dark:text-white px-8 py-4">
                 {children}
               </DialogComponent.Panel>
             </div>
