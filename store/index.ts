@@ -1,6 +1,7 @@
 import { emptyArray } from "@/constants/guess";
 import { FormattedGuess, Solution } from "@/types/wordleTypes";
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
 type Store = {
   solution: Solution;
@@ -21,33 +22,36 @@ type Store = {
   setStatsOpen: (isOpen: boolean) => void;
 };
 
-export const useStore = create<Store>()((set) => ({
-  solution: {
-    id: "",
-    word: "",
-  },
-  turn: 1,
-  guess: "",
-  guesses: emptyArray,
-  history: [],
-  isCorrect: false,
-  instructionsIsOpen: false,
-  statsIsOpen: false,
-  setSolution: (solution) => set(() => ({ solution })),
-  increaseTurn: () => set((state) => ({ turn: state.turn + 1 })),
-  setGuess: (guess) =>
-    set((state) => ({
-      guess,
-    })),
-  setGuesses: (guesses) =>
-    set((state) => {
-      let newGuess = [...state.guesses];
-      newGuess[state.turn - 1] = guesses;
-      return { guesses: newGuess };
-    }),
-  setHistory: (guess) =>
-    set((state) => ({ history: [...state.history, guess] })),
-  setIsCorrect: (isCorrect) => set(() => ({ isCorrect })),
-  setInstructionsOpen: (isOpen) => set(() => ({ instructionsIsOpen: isOpen })),
-  setStatsOpen: (isOpen) => set(() => ({ statsIsOpen: isOpen })),
-}));
+export const useStore = create<Store>()(
+  devtools((set) => ({
+    solution: {
+      id: "",
+      word: "",
+    },
+    turn: 1,
+    guess: "",
+    guesses: emptyArray,
+    history: [],
+    isCorrect: false,
+    instructionsIsOpen: false,
+    statsIsOpen: false,
+    setSolution: (solution) => set(() => ({ solution })),
+    increaseTurn: () => set((state) => ({ turn: state.turn + 1 })),
+    setGuess: (guess) =>
+      set((state) => ({
+        guess,
+      })),
+    setGuesses: (guesses) =>
+      set((state) => {
+        let newGuess = [...state.guesses];
+        newGuess[state.turn - 1] = guesses;
+        return { guesses: newGuess };
+      }),
+    setHistory: (guess) =>
+      set((state) => ({ history: [...state.history, guess] })),
+    setIsCorrect: (isCorrect) => set(() => ({ isCorrect })),
+    setInstructionsOpen: (isOpen) =>
+      set(() => ({ instructionsIsOpen: isOpen })),
+    setStatsOpen: (isOpen) => set(() => ({ statsIsOpen: isOpen })),
+  }))
+);

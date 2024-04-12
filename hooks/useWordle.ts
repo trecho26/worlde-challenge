@@ -2,7 +2,6 @@ import { useStore } from "@/store";
 import { FormattedGuess } from "@/types/wordleTypes";
 import { isLetter } from "@/utils/regex";
 import { DateTime } from "luxon";
-import useLocalStorage from "./useLocalStorage";
 import { useMetaDataStore } from "@/store/metaData";
 
 const useWordle = () => {
@@ -17,8 +16,6 @@ const useWordle = () => {
     setHistory,
     setIsCorrect,
   } = useStore();
-  const { setRoundEnded } = useMetaDataStore();
-  const { setValue } = useLocalStorage();
 
   const formatGuess = () => {
     const solutionArr: (string | null)[] = solution.word.split("");
@@ -51,8 +48,6 @@ const useWordle = () => {
   const addGuess = (formattedGuess: FormattedGuess[]) => {
     if (guess === solution.word) {
       setIsCorrect(true);
-      const currDate = DateTime.local().toISO();
-      setRoundEnded(currDate);
     }
 
     setGuesses(formattedGuess);
@@ -67,8 +62,6 @@ const useWordle = () => {
   const handleKeyUp = (key: string) => {
     if (turn > 5) {
       console.log("You used all your tuns");
-      const currDate = DateTime.local().toISO();
-      setRoundEnded(currDate);
       return;
     }
 
