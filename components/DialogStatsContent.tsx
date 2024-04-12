@@ -1,5 +1,6 @@
 import useCountDown from "@/hooks/useCountDown";
 import { useStore } from "@/store";
+import { useMetaDataStore } from "@/store/metaData";
 import { DateTime, Duration } from "luxon";
 
 type Props = {
@@ -9,7 +10,8 @@ type Props = {
 const duration = Duration.fromObject({ minutes: 1 });
 
 const DialogStatsContent = ({ onClick }: Props) => {
-  const { isCorrect, solution, lastPlay, roundEnded } = useStore();
+  const { isCorrect, solution } = useStore();
+  const { roundEnded } = useMetaDataStore();
   const { minutes, seconds } = useCountDown(
     DateTime.fromISO(roundEnded || "")
       .plus(duration)

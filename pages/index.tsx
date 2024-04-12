@@ -11,6 +11,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { DateTime } from "luxon";
 import DialogHelpContent from "@/components/DialogHelpContent";
 import DialogStatsContent from "@/components/DialogStatsContent";
+import { useMetaDataStore } from "@/store/metaData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,46 +20,39 @@ export default function Home() {
     solution,
     instructionsIsOpen,
     statsIsOpen,
-    lastPlay,
     setSolution,
     setInstructionsOpen,
     setStatsOpen,
-    setLastPlay,
   } = useStore();
-  const { setValue, getValue } = useLocalStorage();
+  const { firstTime, setFirstTime } = useMetaDataStore();
 
   const handleStartGame = () => {
-    if (lastPlay) {
+    if (firstTime) {
       setInstructionsOpen(false);
       return;
     }
 
-    const currDate = DateTime.local().toISO();
-    setValue("lastPlay", currDate);
-    setLastPlay(currDate);
+    setFirstTime(true);
   };
 
   useEffect(() => {
-    setLastPlay(getValue("lastPlay") || null);
-  }, []);
-
-  useEffect(() => {
-    if (!lastPlay) {
+    if (!firstTime) {
       setInstructionsOpen(true);
-    } else {
-      setInstructionsOpen(false);
+      return;
     }
+
+    setInstructionsOpen(false);
 
     const randomSolution: Solution =
       words[Math.floor(Math.random() * words.length - 1)];
 
     setSolution(randomSolution);
-  }, [setSolution, lastPlay]);
+  }, [setSolution, firstTime]);
 
   return (
     <main className={`${inter.className} w-[90%] mx-auto my-0`}>
       <Navbar />
-      {solution && <Wordle />}
+      <Wordle />
       <Keyboard />
       <Dialog
         open={instructionsIsOpen}
