@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import { useMetaDataStore } from "@/store/metaData";
 import { DateTime } from "luxon";
 import { getRandomSolution } from "@/utils/solution";
+import Alert from "./Alert";
 
 const Wordle = () => {
   const {
@@ -18,14 +19,15 @@ const Wordle = () => {
     turn,
     instructionsIsOpen,
     statsIsOpen,
+    alert,
     setSolution,
     setStatsOpen,
     setInstructionsOpen,
+    setAlert,
     reset,
   } = useStore();
   const { handleKeyUp } = useWordle();
   const {
-    roundEnded,
     wordsUsed,
     setFirstTime,
     increaseRounds,
@@ -95,6 +97,15 @@ const Wordle = () => {
 
   return (
     <>
+      <Alert
+        isOpen={alert.isOpen}
+        message={alert.message}
+        severity={alert.severity}
+        onClose={() => {
+          setAlert({ ...alert, isOpen: false });
+        }}
+        duration={2000}
+      />
       <Navbar />
       <Grid />
       <Keyboard />

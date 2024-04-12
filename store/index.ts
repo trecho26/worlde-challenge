@@ -1,5 +1,10 @@
 import { emptyArray } from "@/constants/guess";
-import { FormattedGuess, Solution } from "@/types/wordleTypes";
+import {
+  ALERT_SEVERITY,
+  Alert,
+  FormattedGuess,
+  Solution,
+} from "@/types/wordleTypes";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -12,6 +17,7 @@ type Store = {
   isCorrect: boolean;
   instructionsIsOpen: boolean;
   statsIsOpen: boolean;
+  alert: Alert;
 };
 
 type Actions = {
@@ -24,6 +30,7 @@ type Actions = {
   setIsCorrect: (isCorrect: boolean) => void;
   setInstructionsOpen: (isOpen: boolean) => void;
   setStatsOpen: (isOpen: boolean) => void;
+  setAlert: (alert: Alert) => void;
 };
 
 const initialState: Store = {
@@ -38,6 +45,11 @@ const initialState: Store = {
   isCorrect: false,
   instructionsIsOpen: false,
   statsIsOpen: false,
+  alert: {
+    isOpen: false,
+    message: "",
+    severity: ALERT_SEVERITY.INFO,
+  },
 };
 
 export const useStore = create<Store & Actions>()(
@@ -64,5 +76,6 @@ export const useStore = create<Store & Actions>()(
     setInstructionsOpen: (isOpen) =>
       set(() => ({ instructionsIsOpen: isOpen })),
     setStatsOpen: (isOpen) => set(() => ({ statsIsOpen: isOpen })),
+    setAlert: (alert) => set(() => ({ alert })),
   }))
 );

@@ -1,6 +1,6 @@
 import { letters } from "@/constants/guess";
 import { useStore } from "@/store";
-import { UsedKeys } from "@/types/wordleTypes";
+import { GUESS_STATE, UsedKeys } from "@/types/wordleTypes";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import DeleteIcon from "./icons/DeleteIcon";
@@ -23,22 +23,25 @@ const Keyboard = () => {
     cleanGuesses.slice(-1)[0].forEach((guess) => {
       let currentColor = lastGuessEntered[guess.key];
 
-      if (guess.color === "green") {
-        lastGuessEntered[guess.key] = "green";
-        return;
-      }
-
-      if (guess.color === "yellow" && currentColor !== "green") {
-        lastGuessEntered[guess.key] = "yellow";
+      if (guess.color === GUESS_STATE.GREEN) {
+        lastGuessEntered[guess.key] = GUESS_STATE.GREEN;
         return;
       }
 
       if (
-        guess.color === "grey" &&
-        currentColor !== "green" &&
-        currentColor !== "yellow"
+        guess.color === GUESS_STATE.YELLOW &&
+        currentColor !== GUESS_STATE.GREEN
       ) {
-        lastGuessEntered[guess.key] = "grey";
+        lastGuessEntered[guess.key] = GUESS_STATE.YELLOW;
+        return;
+      }
+
+      if (
+        guess.color === GUESS_STATE.GREY &&
+        currentColor !== GUESS_STATE.GREEN &&
+        currentColor !== GUESS_STATE.YELLOW
+      ) {
+        lastGuessEntered[guess.key] = GUESS_STATE.GREY;
         return;
       }
     });
@@ -56,11 +59,11 @@ const Keyboard = () => {
             "m-1 w-10 h-12 bg-[#D3D6DA] dark:bg-[#565F7E] dark:text-white inline-block rounded leading-[3rem] uppercase disabled:opacity-50",
             {
               "bg-wordGreen text-white transition-all duration-[0.5s] ease-in-out":
-                usedKeys[letter] === "green",
+                usedKeys[letter] === GUESS_STATE.GREEN,
               "bg-wordYellow text-white transition-all duration-[0.5s] ease-in-out":
-                usedKeys[letter] === "yellow",
+                usedKeys[letter] === GUESS_STATE.YELLOW,
               "bg-wordGrey text-white transition-all duration-[0.5s] ease-in-out":
-                usedKeys[letter] === "grey",
+                usedKeys[letter] === GUESS_STATE.GREY,
               "w-[fit-content] px-4 inline-flex justify-center items-center align-bottom":
                 letter === "Enter" || letter === "Backspace",
             }

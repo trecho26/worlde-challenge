@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-const duration = Duration.fromObject({ seconds: 10 });
+const duration = Duration.fromObject({ minutes: 5 });
 
 const DialogStatsContent = ({ onClick }: Props) => {
   const { isCorrect, solution, guesses } = useStore();
@@ -30,13 +30,18 @@ const DialogStatsContent = ({ onClick }: Props) => {
       </div>
       {roundEnded && guesses.filter((g) => g).length > 0 && (
         <>
-          {!isCorrect && (
+          {!isCorrect ? (
             <p className="my-3">
               La palabra era:{" "}
               <span className="font-bold uppercase">{solution.word}</span>
             </p>
+          ) : (
+            <p className="my-3 text-center text-green-500 font-semibold">
+              !FELICIDADES¡
+            </p>
           )}
           <p className="text-center text-sm">SIGUIENTE PALABRA</p>
+
           <CountDown
             init={roundEnded}
             duration={duration}
