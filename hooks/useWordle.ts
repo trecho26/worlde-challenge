@@ -1,7 +1,6 @@
 import { useStore } from "@/store";
 import { FormattedGuess } from "@/types/wordleTypes";
 import { isLetter } from "@/utils/regex";
-import { useState } from "react";
 
 const useWordle = () => {
   const {
