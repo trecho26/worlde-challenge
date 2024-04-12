@@ -31,7 +31,7 @@ const DialogStatsContent = ({ onClick }: Props) => {
       {roundEnded && guesses.filter((g) => g).length > 0 && (
         <>
           {!isCorrect ? (
-            <p className="my-3">
+            <p className="my-3 text-center">
               La palabra era:{" "}
               <span className="font-bold uppercase">{solution.word}</span>
             </p>
