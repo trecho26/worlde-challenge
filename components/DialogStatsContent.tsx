@@ -18,7 +18,7 @@ const DialogStatsContent = ({ onClick }: Props) => {
   return (
     <>
       <h3 className="font-bold text-3xl text-center">Estadísticas</h3>
-      <div className="flex justify-between my-3">
+      <div className="flex justify-between gap-16 my-3">
         <div className="flex flex-col items-center justify-center">
           <span className="block font-bold text-xl">{rounds}</span>
           <span className="block">Juagadas</span>

@@ -1,12 +1,7 @@
 import { useMetaDataStore } from "@/store/metaData";
-import { useState, useEffect } from "react";
 
 const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useMetaDataStore();
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
 
   return (
     <label
