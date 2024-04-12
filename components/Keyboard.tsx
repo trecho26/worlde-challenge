@@ -3,7 +3,7 @@ import { useStore } from "@/store";
 import { UsedKeys } from "@/types/wordleTypes";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { DeleteIcon } from "./DeleteIcon";
+import DeleteIcon from "./icons/DeleteIcon";
 import useWordle from "@/hooks/useWordle";
 
 const Keyboard = () => {

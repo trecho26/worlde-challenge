@@ -1,6 +1,10 @@
 import Image from "next/image";
 
-const DialogContent = () => {
+type Props = {
+  onClick: () => void;
+};
+
+const DialogHelpContent = ({ onClick }: Props) => {
   return (
     <>
       <h3 className="font-bold text-3xl text-center">Cómo jugar</h3>
@@ -50,8 +54,16 @@ const DialogContent = () => {
         letra.
       </p>
       <p className="my-3 text-center">¡Una palabra nueva cada 5 minutos!</p>
+      <div className="flex justify-center">
+        <button
+          onClick={onClick}
+          className="bg-wordGreen text-white font-semibold rounded w-1/2 py-1"
+        >
+          !JUGAR¡
+        </button>
+      </div>
     </>
   );
 };
 
-export default DialogContent;
+export default DialogHelpContent;

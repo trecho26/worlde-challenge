@@ -1,15 +1,15 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { words } from "@/public/words";
 import Wordle from "@/components/Wordle";
 import { Solution } from "@/types/wordleTypes";
 import Navbar from "@/components/Navbar";
 import { useStore } from "@/store";
 import Keyboard from "@/components/Keyboard";
-import Dialog from "@/components/Dialog/Dialog";
+import Dialog from "@/components/Dialog";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { DateTime } from "luxon";
+import DialogHelpContent from "@/components/DialogHelpContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +25,11 @@ export default function Home() {
   const { setValue, getValue } = useLocalStorage();
 
   const handleStartGame = () => {
+    if (lastPlay) {
+      setInstructionsOpen(false);
+      return;
+    }
+
     const currDate = DateTime.local().toISO();
     setValue("lastPlay", currDate);
     setLastPlay(currDate);
@@ -55,8 +60,9 @@ export default function Home() {
       <Dialog
         open={instructionsIsOpen}
         onClose={() => setInstructionsOpen(false)}
-        onClick={handleStartGame}
-      />
+      >
+        <DialogHelpContent onClick={handleStartGame} />
+      </Dialog>
     </main>
   );
 }

@@ -35,8 +35,6 @@ const Wordle = () => {
 
   return (
     <>
-      <div>Solution - {solution.word}</div>
-      <div>current guess - {guess}</div>
       <Grid />
     </>
   );

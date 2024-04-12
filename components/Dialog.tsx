@@ -1,18 +1,16 @@
-import { Fragment, useRef } from "react";
+import { Fragment, ReactNode } from "react";
 import { Dialog as DialogComponent, Transition } from "@headlessui/react";
-import DialogContent from "./DialogContent";
 
 type Props = {
+  children: ReactNode;
   open: boolean;
   onClose: () => void;
-  onClick: () => void;
 };
 
-const Dialog = ({ open, onClose, onClick }: Props) => {
-  const playButtonRef = useRef(null);
+const Dialog = ({ children, open, onClose }: Props) => {
   return (
     <Transition show={open} as={Fragment}>
-      <DialogComponent onClose={onClose} initialFocus={playButtonRef}>
+      <DialogComponent onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -36,16 +34,7 @@ const Dialog = ({ open, onClose, onClick }: Props) => {
           <div className="fixed inset-0 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
               <DialogComponent.Panel className="mx-auto max-w-sm rounded bg-white px-8 py-4">
-                <DialogContent />
-                <div className="flex justify-center">
-                  <button
-                    ref={playButtonRef}
-                    onClick={onClick}
-                    className="bg-wordGreen text-white font-semibold rounded w-1/2 py-1"
-                  >
-                    !JUGAR¡
-                  </button>
-                </div>
+                {children}
               </DialogComponent.Panel>
             </div>
           </div>
