@@ -13,7 +13,10 @@ const Keyboard = () => {
 
   useEffect(() => {
     const cleanGuesses = guesses.filter((g) => g);
-    if (cleanGuesses.length === 0) return;
+    if (cleanGuesses.length === 0) {
+      setUsedKeys({});
+      return;
+    }
 
     let lastGuessEntered: UsedKeys = { ...usedKeys };
 
@@ -44,7 +47,7 @@ const Keyboard = () => {
   }, [guesses]);
 
   return (
-    <div className="max-w-[500px] my-[20px] mx-auto text-center">
+    <div className="max-w-[500px] my-[20px] mx-auto text-center select-none">
       {letters.map((letter, index) => (
         <button
           disabled={isCorrect || turn > 5}

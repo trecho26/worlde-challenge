@@ -9,23 +9,29 @@ import DialogStatsContent from "@/components/DialogStatsContent";
 import Navbar from "@/components/Navbar";
 import { useMetaDataStore } from "@/store/metaData";
 import { DateTime } from "luxon";
+import { getRandomSolution } from "@/utils/solution";
 
 const Wordle = () => {
   const {
+    solution,
     isCorrect,
     turn,
     instructionsIsOpen,
     statsIsOpen,
+    setSolution,
     setStatsOpen,
     setInstructionsOpen,
+    reset,
   } = useStore();
   const { handleKeyUp } = useWordle();
   const {
     roundEnded,
+    wordsUsed,
     setFirstTime,
     increaseRounds,
     increaseVictories,
     setRoundEnded,
+    setWordsUsed,
   } = useMetaDataStore();
 
   const handleEventListener = (e: KeyboardEvent) => {
@@ -37,6 +43,15 @@ const Wordle = () => {
     setFirstTime(false);
   };
 
+  const handleNextGame = () => {
+    setStatsOpen(false);
+    setRoundEnded(null);
+    setWordsUsed(solution.word);
+    reset();
+    const randomSolution = getRandomSolution(wordsUsed);
+    setSolution(randomSolution);
+  };
+
   const finishSession = () => {
     setRoundEnded(DateTime.local().toISO());
     increaseRounds();
@@ -44,12 +59,6 @@ const Wordle = () => {
     if (isCorrect) {
       increaseVictories();
     }
-  };
-
-  const handleCloseStats = () => {
-    if (roundEnded) return;
-
-    setStatsOpen(false);
   };
 
   useEffect(() => {
@@ -95,8 +104,8 @@ const Wordle = () => {
       >
         <DialogHelpContent onClick={handleStartGame} />
       </Dialog>
-      <Dialog open={statsIsOpen} onClose={handleCloseStats}>
-        <DialogStatsContent onClick={() => setStatsOpen(false)} />
+      <Dialog open={statsIsOpen} onClose={() => setStatsOpen(false)}>
+        <DialogStatsContent onClick={handleNextGame} />
       </Dialog>
     </>
   );

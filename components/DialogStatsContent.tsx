@@ -2,16 +2,19 @@ import { useStore } from "@/store";
 import CountDown from "./CountDown";
 import { useMetaDataStore } from "@/store/metaData";
 import { Duration } from "luxon";
+import { useState } from "react";
 
 type Props = {
   onClick: () => void;
 };
 
-const duration = Duration.fromObject({ minutes: 1 });
+const duration = Duration.fromObject({ seconds: 10 });
 
 const DialogStatsContent = ({ onClick }: Props) => {
   const { isCorrect, solution, guesses } = useStore();
   const { roundEnded, rounds, victories } = useMetaDataStore();
+  const [isDisabled, setIsDisabled] = useState(true);
+
   return (
     <>
       <h3 className="font-bold text-3xl text-center">Estadísticas</h3>
@@ -33,8 +36,21 @@ const DialogStatsContent = ({ onClick }: Props) => {
               <span className="font-bold uppercase">{solution.word}</span>
             </p>
           )}
-          <p className="my-3 text-center text-sm">SIGUIENTE PALABRA</p>
-          <CountDown init={roundEnded} duration={duration} />
+          <p className="text-center text-sm">SIGUIENTE PALABRA</p>
+          <CountDown
+            init={roundEnded}
+            duration={duration}
+            onTimeOut={() => setIsDisabled(false)}
+          />
+          <div className="flex justify-center mt-3">
+            <button
+              onClick={onClick}
+              disabled={isDisabled}
+              className="bg-wordGreen text-white font-semibold rounded w-1/2 py-1 disabled:opacity-50"
+            >
+              Aceptar
+            </button>
+          </div>
         </>
       )}
     </>

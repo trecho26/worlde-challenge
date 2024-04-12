@@ -9,6 +9,9 @@ type Store = {
   victories: number;
   roundEnded: string | null;
   wordsUsed: string[];
+};
+
+type Actions = {
   setFirstTime: (firstTime: boolean) => void;
   increaseRounds: () => void;
   increaseVictories: () => void;
@@ -16,7 +19,7 @@ type Store = {
   setWordsUsed: (wordUsed: string) => void;
 };
 
-export const useMetaDataStore = create<Store>()(
+export const useMetaDataStore = create<Store & Actions>()(
   persist(
     (set) => ({
       firstTime: true,

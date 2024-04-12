@@ -12,6 +12,10 @@ type Store = {
   isCorrect: boolean;
   instructionsIsOpen: boolean;
   statsIsOpen: boolean;
+};
+
+type Actions = {
+  reset: () => void;
   setSolution: (solution: Solution) => void;
   increaseTurn: () => void;
   setGuess: (guess: string) => void;
@@ -22,23 +26,30 @@ type Store = {
   setStatsOpen: (isOpen: boolean) => void;
 };
 
-export const useStore = create<Store>()(
+const initialState: Store = {
+  solution: {
+    id: "",
+    word: "",
+  },
+  turn: 1,
+  guess: "",
+  guesses: emptyArray,
+  history: [],
+  isCorrect: false,
+  instructionsIsOpen: false,
+  statsIsOpen: false,
+};
+
+export const useStore = create<Store & Actions>()(
   devtools((set) => ({
-    solution: {
-      id: "",
-      word: "",
+    ...initialState,
+    reset: () => {
+      set(initialState);
     },
-    turn: 1,
-    guess: "",
-    guesses: emptyArray,
-    history: [],
-    isCorrect: false,
-    instructionsIsOpen: false,
-    statsIsOpen: false,
     setSolution: (solution) => set(() => ({ solution })),
     increaseTurn: () => set((state) => ({ turn: state.turn + 1 })),
     setGuess: (guess) =>
-      set((state) => ({
+      set(() => ({
         guess,
       })),
     setGuesses: (guesses) =>
