@@ -6,12 +6,12 @@ type Props = {
   onClick: () => void;
 };
 
-const duration = Duration.fromObject({ seconds: 15 });
+const duration = Duration.fromObject({ minutes: 1 });
 
 const DialogStatsContent = ({ onClick }: Props) => {
-  const { isCorrect, solution, lastPlay } = useStore();
+  const { isCorrect, solution, lastPlay, roundEnded } = useStore();
   const { minutes, seconds } = useCountDown(
-    DateTime.fromISO(lastPlay || "")
+    DateTime.fromISO(roundEnded || "")
       .plus(duration)
       .toISO() || ""
   );
