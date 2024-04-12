@@ -10,6 +10,7 @@ import Dialog from "@/components/Dialog";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { DateTime } from "luxon";
 import DialogHelpContent from "@/components/DialogHelpContent";
+import DialogStatsContent from "@/components/DialogStatsContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,11 @@ export default function Home() {
   const {
     solution,
     instructionsIsOpen,
+    statsIsOpen,
     lastPlay,
     setSolution,
     setInstructionsOpen,
+    setStatsOpen,
     setLastPlay,
   } = useStore();
   const { setValue, getValue } = useLocalStorage();
@@ -62,6 +65,9 @@ export default function Home() {
         onClose={() => setInstructionsOpen(false)}
       >
         <DialogHelpContent onClick={handleStartGame} />
+      </Dialog>
+      <Dialog open={statsIsOpen} onClose={() => setStatsOpen(false)}>
+        <DialogStatsContent onClick={() => setStatsOpen(false)} />
       </Dialog>
     </main>
   );

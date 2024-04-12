@@ -10,6 +10,7 @@ type Store = {
   history: string[];
   isCorrect: boolean;
   instructionsIsOpen: boolean;
+  statsIsOpen: boolean;
   lastPlay: string | null;
   setSolution: (solution: Solution) => void;
   increaseTurn: () => void;
@@ -18,6 +19,7 @@ type Store = {
   setHistory: (guess: string) => void;
   setIsCorrect: (isCorrect: boolean) => void;
   setInstructionsOpen: (isOpen: boolean) => void;
+  setStatsOpen: (isOpen: boolean) => void;
   setLastPlay: (lastPlay: string | null) => void;
 };
 
@@ -32,6 +34,7 @@ export const useStore = create<Store>()((set) => ({
   history: [],
   isCorrect: false,
   instructionsIsOpen: false,
+  statsIsOpen: false,
   lastPlay: null,
   setSolution: (solution) => set(() => ({ solution })),
   increaseTurn: () => set((state) => ({ turn: state.turn + 1 })),
@@ -49,5 +52,6 @@ export const useStore = create<Store>()((set) => ({
     set((state) => ({ history: [...state.history, guess] })),
   setIsCorrect: (isCorrect) => set(() => ({ isCorrect })),
   setInstructionsOpen: (isOpen) => set(() => ({ instructionsIsOpen: isOpen })),
+  setStatsOpen: (isOpen) => set(() => ({ statsIsOpen: isOpen })),
   setLastPlay: (lastPlay) => set(() => ({ lastPlay })),
 }));
